@@ -6,9 +6,9 @@ spring:
     name: fleet-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/fleet_db
-    username: postgres
-    password: postgrespassword
+    url: jdbc:postgresql://localhost:5433/fleet_db
+    username: sayantanB2B
+    password: 12345
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -30,9 +30,23 @@ spring:
     redis:
       time-to-live: 600000 # 10 minutes cache TTL
 
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: health,info,metrics
+    endpoint:
+      health:
+        show-details: always
+
+datasource:
+    url: jdbc:postgresql://localhost:5432/auth_db?options=-c%20TimeZone=Asia/Kolkata
+
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
+
+

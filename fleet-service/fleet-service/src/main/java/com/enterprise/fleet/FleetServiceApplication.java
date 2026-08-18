@@ -9,6 +9,7 @@ import org.springframework.cache.annotation.EnableCaching;
 public class FleetServiceApplication {
 
 	public static void main(String[] args) {
+        java.util.TimeZone.setDefault(java.util.TimeZone.getTimeZone("Asia/Kolkata"));
 		SpringApplication.run(FleetServiceApplication.class, args);
 	}
 
