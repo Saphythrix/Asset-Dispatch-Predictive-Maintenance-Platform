@@ -18,18 +18,66 @@ Built on a decoupled microservices architecture with a responsive industrial-the
 
 ## 📑 Table of Contents
 
-1. [Executive Summary & Problem Statement](#-executive-summary--problem-statement)
-2. [The ApexFleet Solution & Key Beneficiaries](#-the-apexfleet-solution--key-beneficiaries)
-3. [System Architecture & Microservice Ecosystem](#-system-architecture--microservice-ecosystem)
-4. [Core Features & Functional Modules](#-core-features--functional-modules)
-5. [End-to-End Business Flow & Logic](#-end-to-end-business-flow--logic)
-6. [Design System & Vector Illustration Library](#-design-system--vector-illustration-library)
-7. [GST Invoicing & Indian Rupee Economy](#-gst-invoicing--indian-rupee-economy)
-8. [Repository Directory Structure](#-repository-directory-structure)
-9. [Prerequisites & Quick Start Guide](#-prerequisites--quick-start-guide)
-10. [REST API Endpoint Reference](#-rest-api-endpoint-reference)
-11. [Security, RBAC & Multi-Tenancy](#-security-rbac--multi-tenancy)
-12. [Future Roadmap & Extensibility](#-future-roadmap--extensibility)
+1. [Application Screenshots & UI Showcase](#-application-screenshots--ui-showcase)
+2. [Executive Summary & Problem Statement](#-executive-summary--problem-statement)
+3. [The ApexFleet Solution & Key Beneficiaries](#-the-apexfleet-solution--key-beneficiaries)
+4. [System Architecture & Microservice Ecosystem](#-system-architecture--microservice-ecosystem)
+5. [Core Features & Functional Modules](#-core-features--functional-modules)
+6. [End-to-End Business Flow & Logic](#-end-to-end-business-flow--logic)
+7. [Design System & Vector Illustration Library](#-design-system--vector-illustration-library)
+8. [GST Invoicing & Indian Rupee Economy](#-gst-invoicing--indian-rupee-economy)
+9. [Repository Directory Structure](#-repository-directory-structure)
+10. [Prerequisites & Quick Start Guide](#-prerequisites--quick-start-guide)
+11. [REST API Endpoint Reference](#-rest-api-endpoint-reference)
+12. [Security, RBAC & Multi-Tenancy](#-security-rbac--multi-tenancy)
+13. [Future Roadmap & Extensibility](#-future-roadmap--extensibility)
+
+---
+
+## 📸 Application Screenshots & UI Showcase
+
+### 1. Contractor Dispatch & Asset Portal
+The primary contractor workspace featuring real-time fleet telemetry, active time indicators, machinery catalog with custom vector icons (Oscilloscopes, Trailer Trucks, Bulldozers), and instant equipment requesting.
+
+<p align="center">
+  <img src="docs/screenshots/client_portal.png" alt="Client Dispatch and Asset Portal" width="900" />
+</p>
+
+---
+
+### 2. Interactive Equipment Dispatch & Live Rate Estimator Modal
+Contractors select specific machinery units, pick quick duration presets (4 hrs, 8 hrs shift, 24 hrs full day), specify slot windows, and receive live total charge calculations with 1.5× overtime disclosures.
+
+<p align="center">
+  <img src="docs/screenshots/order_dispatch_modal.png" alt="Order Equipment Dispatch Modal" width="800" />
+</p>
+
+---
+
+### 3. Itemized Billing & Overtime Ledger
+Detailed financial audit ledger displaying equipment units, rates ($\text{₹/hr}$), scheduled vs. actual runtime telemetry hours, base rental charges, 1.5× overtime penalty surcharges, total charged amounts, and one-click GST Tax Invoice access.
+
+<p align="center">
+  <img src="docs/screenshots/billing_ledger.png" alt="Itemized Billing and Overtime Ledger" width="900" />
+</p>
+
+---
+
+### 4. Client Account & Lifetime Spending Center
+The dedicated client account center modal providing total lifetime spending metrics in Indian Rupees ($\text{INR ₹}$), base rental vs. overtime surcharge breakdowns, total operating hours logged, and direct invoice inspection.
+
+<p align="center">
+  <img src="docs/screenshots/account_center.png" alt="Client Account and Spending Records" width="850" />
+</p>
+
+---
+
+### 5. Fleet Manager Equipment Operations & Inventory Rate Setting
+The fleet manager command center showing total platform fleet assets, availability metrics, active contractor dispatches, operating telemetry vs. service thresholds, and direct hourly rate controls ($\text{₹/hr}$).
+
+<p align="center">
+  <img src="docs/screenshots/fleet_operations.png" alt="Fleet Operations and Rates" width="900" />
+</p>
 
 ---
 
