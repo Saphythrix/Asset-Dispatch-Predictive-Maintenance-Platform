@@ -15,4 +15,5 @@ public class AssetDto {
     private int operatingHours;
     private int maintenanceThresholdHours;
     private LocalDateTime nextMaintenanceDue;
+    private Double hourlyRate;
 }

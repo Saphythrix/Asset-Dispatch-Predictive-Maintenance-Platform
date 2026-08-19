@@ -16,6 +16,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/work-orders")
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class WorkOrderController {
 
@@ -24,6 +25,11 @@ public class WorkOrderController {
     @PostMapping
     public ResponseEntity<WorkOrderResponse> createWorkOrder(@Valid @RequestBody CreateWorkOrderRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(workOrderService.createWorkOrder(request));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<WorkOrderResponse>> getAllWorkOrders() {
+        return ResponseEntity.ok(workOrderService.getAllWorkOrders());
     }
 
     @GetMapping("/{id}")

@@ -29,4 +29,6 @@ public class CreateAssetRequest {
 
     @NotNull(message = "Next maintenance date is required")
     private LocalDateTime nextMaintenanceDue;
+
+    private Double hourlyRate;
 }

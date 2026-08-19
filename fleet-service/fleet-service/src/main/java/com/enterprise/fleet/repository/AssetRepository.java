@@ -1,6 +1,5 @@
 package com.enterprise.fleet.repository;
 
-
 import com.enterprise.fleet.entity.Asset;
 import com.enterprise.fleet.entity.AssetStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,9 +9,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-
+@Repository
 public interface AssetRepository extends JpaRepository<Asset, UUID> {
-    List<UUID> findByClientCompanyId(UUID clientCompanyId);
+    List<Asset> findByClientCompanyId(UUID clientCompanyId);
     Optional<Asset> findBySerialNumber(String serialNumber);
     List<Asset> findByStatus(AssetStatus status);
 }

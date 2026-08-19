@@ -46,6 +46,10 @@ public class Asset implements Serializable {
     @Column(nullable = false)
     private LocalDateTime nextMaintenanceDue;
 
+    @Column
+    @Builder.Default
+    private Double hourlyRate = 100.0;
+
     @Version
     private Integer version; // Optimistic Locking Guard
 

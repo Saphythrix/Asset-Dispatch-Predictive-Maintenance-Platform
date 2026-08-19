@@ -78,6 +78,13 @@ public class WorkOrderService {
     }
 
     @Transactional(readOnly = true)
+    public List<WorkOrderResponse> getAllWorkOrders() {
+        return workOrderRepository.findAll().stream()
+                .map(this::mapToResponse)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
     public List<WorkOrderStateLog> getAuditLogs(UUID workOrderId) {
         return stateLogRepository.findByWorkOrderIdOrderByTransitionedAtDesc(workOrderId);
     }

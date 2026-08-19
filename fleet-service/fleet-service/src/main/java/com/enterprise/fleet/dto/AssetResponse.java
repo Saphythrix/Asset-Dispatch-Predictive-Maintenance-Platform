@@ -28,4 +28,5 @@ public class AssetResponse implements Serializable {
     private int operatingHours;
     private int maintenanceThresholdHours;
     private LocalDateTime nextMaintenanceDue;
+    private Double hourlyRate;
 }

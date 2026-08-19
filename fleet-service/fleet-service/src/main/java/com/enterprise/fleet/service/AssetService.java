@@ -27,6 +27,8 @@ public class AssetService {
             throw new IllegalArgumentException("Asset with serial number " + request.getSerialNumber() + " already exists.");
         }
 
+        Double rate = (request.getHourlyRate() != null && request.getHourlyRate() > 0) ? request.getHourlyRate() : 100.0;
+
         Asset asset = Asset.builder()
                 .clientCompanyId(request.getClientCompanyId())
                 .serialNumber(request.getSerialNumber())
@@ -36,6 +38,7 @@ public class AssetService {
                 .operatingHours(0)
                 .maintenanceThresholdHours(request.getMaintenanceThresholdHours())
                 .nextMaintenanceDue(request.getNextMaintenanceDue())
+                .hourlyRate(rate)
                 .build();
 
         Asset savedAsset = assetRepository.save(asset);
@@ -51,9 +54,16 @@ public class AssetService {
     }
 
     @Transactional(readOnly = true)
+    public List<AssetResponse> getAllAssets() {
+        return assetRepository.findAll().stream()
+                .map(this::mapToResponse)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
     public List<AssetResponse> getAssetsByCompany(UUID companyId) {
         return assetRepository.findByClientCompanyId(companyId).stream()
-                .map(this::getAssetById)
+                .map(this::mapToResponse)
                 .toList();
     }
 
@@ -64,6 +74,19 @@ public class AssetService {
                 .orElseThrow(() -> new IllegalArgumentException("Asset not found with ID: " + id));
 
         asset.setStatus(newStatus);
+        Asset updated = assetRepository.save(asset);
+        return mapToResponse(updated);
+    }
+
+    @CacheEvict(value = "assets", key = "#id")
+    @Transactional
+    public AssetResponse updateAssetPrice(UUID id, Double hourlyRate) {
+        Asset asset = assetRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Asset not found with ID: " + id));
+
+        if (hourlyRate != null && hourlyRate > 0) {
+            asset.setHourlyRate(hourlyRate);
+        }
         Asset updated = assetRepository.save(asset);
         return mapToResponse(updated);
     }
@@ -79,6 +102,7 @@ public class AssetService {
                 .operatingHours(asset.getOperatingHours())
                 .maintenanceThresholdHours(asset.getMaintenanceThresholdHours())
                 .nextMaintenanceDue(asset.getNextMaintenanceDue())
+                .hourlyRate(asset.getHourlyRate() != null ? asset.getHourlyRate() : 100.0)
                 .build();
     }
 }

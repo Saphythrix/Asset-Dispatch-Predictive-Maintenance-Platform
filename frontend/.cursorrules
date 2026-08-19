@@ -1,0 +1,22 @@
+---
+description: Frontend Architecture and shadcn/ui integration rules
+globs: ["src/**/*.tsx", "src/**/*.ts"]
+alwaysApply: true
+---
+
+# Enterprise Frontend Architecture Rules
+
+## 1. Design System (shadcn/ui + Tailwind)
+- ALWAYS check and import UI components from `@/components/ui/*` (e.g. Button, Card, Table, Dialog, Badge, Input, Label, Tabs, Toast, Sidebar).
+- NEVER re-implement custom HTML inputs, tables, or buttons if a shadcn component exists.
+- Style using Tailwind CSS utility classes with dark theme accents (`bg-zinc-950`, `border-zinc-800`, `text-zinc-100`, `text-emerald-400`).
+- Always use the `cn()` helper from `@/lib/utils` for conditional classes.
+
+## 2. Backend Contract & API Synchronization
+- Base Gateway URL: `http://localhost:8080/api/v1`
+- Always use the centralized Axios client from `@/api/client` (which injects the JWT Bearer token).
+- Strictly adhere to data types defined in `@/types/api.ts`.
+- Every form submission must handle:
+  - Loading state (`disabled` button + spinner).
+  - Success notifications (HTTP 200/201).
+  - Conflict/Validation error alerts (HTTP 409 Conflict, 400 Bad Request).

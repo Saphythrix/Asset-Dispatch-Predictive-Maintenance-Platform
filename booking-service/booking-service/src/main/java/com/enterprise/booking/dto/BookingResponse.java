@@ -22,5 +22,11 @@ public class BookingResponse {
     private LocalDateTime slotStart;
     private LocalDateTime slotEnd;
     private BookingStatus status;
+    private Double hourlyRateSnapshot;
+    private Double baseCost;
+    private Double actualHoursUsed;
+    private Double overtimeHours;
+    private Double overtimeCost;
+    private Double totalCost;
     private LocalDateTime createdAt;
 }

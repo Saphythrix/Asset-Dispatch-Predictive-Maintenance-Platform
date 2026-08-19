@@ -1,7 +1,5 @@
 package com.enterprise.booking.dto;
 
-
-import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -21,10 +19,8 @@ public class CreateBookingRequest {
     private UUID createdBy;
 
     @NotNull(message = "Slot start time is required")
-    @Future(message = "Slot start time must be in the future")
     private LocalDateTime slotStart;
 
     @NotNull(message = "Slot end time is required")
-    @Future(message = "Slot end time must be in the future")
     private LocalDateTime slotEnd;
 }
