@@ -1,12 +1,62 @@
+#server:
+#  port: ${PORT:8082}
+#
+#spring:
+#  application:
+#    name: fleet-service
+#
+#  datasource:
+#    url: jdbc:postgresql://localhost:5433/fleet_db
+#    username: sayantanB2B
+#    password: 12345
+#    driver-class-name: org.postgresql.Driver
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+#
+#  data:
+#    redis:
+#      host: localhost
+#      port: 6379
+#
+#  cache:
+#    type: simple
+#
+#  management:
+#    endpoints:
+#      web:
+#        exposure:
+#          include: health,info,metrics
+#    endpoint:
+#      health:
+#        show-details: always
+#
+#datasource:
+#    url: jdbc:postgresql://localhost:5432/auth_db?options=-c%20TimeZone=Asia/Kolkata
+#
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
+#  instance:
+#    prefer-ip-address: true
+#
+#
 server:
-  port: 8082
+  port: ${PORT:8082}
 
 spring:
   application:
     name: fleet-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5433/fleet_db
+    url: jdbc:postgresql://postgres-db:5432/fleet_db
     username: sayantanB2B
     password: 12345
     driver-class-name: org.postgresql.Driver
@@ -22,7 +72,7 @@ spring:
 
   data:
     redis:
-      host: localhost
+      host: redis-cache
       port: 6379
 
   cache:
@@ -37,14 +87,9 @@ spring:
       health:
         show-details: always
 
-datasource:
-    url: jdbc:postgresql://localhost:5432/auth_db?options=-c%20TimeZone=Asia/Kolkata
-
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://service-registry:8761/eureka/
   instance:
     prefer-ip-address: true
-
-

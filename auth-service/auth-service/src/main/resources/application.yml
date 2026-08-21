@@ -1,12 +1,58 @@
+#server:
+#  port: ${PORT:8081}
+#
+#spring:
+#  application:
+#    name: auth-service
+#
+#  datasource:
+#    url: jdbc:postgresql://localhost:5433/auth_db
+#    username: sayantanB2B
+#    password: 12345
+#    driver-class-name: org.postgresql.Driver
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+#
+#  management:
+#    endpoints:
+#      web:
+#        exposure:
+#          include: health,info,metrics
+#    endpoint:
+#      health:
+#        show-details: always
+#
+#jwt:
+#  # Base64 encoded secret key (min 256 bits)
+#  secret: dGhpc0lzQVNlY3JldEtleUZvckpXVENyZWF0aW9uQW5kVmFsaWRhdGlvbkZvckFzc2V0RGlzcGF0Y2hQbGF0Zm9ybTIwMjY=
+#  expiration-ms: 86400000 # 24 hours in milliseconds
+#
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
+#  instance:
+#    prefer-ip-address: true
+#
+#
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/auth_db?options=-c%20TimeZone=Asia/Kolkata
 server:
-  port: 8081
+  port: ${PORT:8081}
 
 spring:
   application:
     name: auth-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5433/auth_db
+    url: jdbc:postgresql://postgres-db:5432/auth_db?options=-c%20TimeZone=Asia/Kolkata
     username: sayantanB2B
     password: 12345
     driver-class-name: org.postgresql.Driver
@@ -37,10 +83,6 @@ jwt:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://service-registry:8761/eureka/
   instance:
     prefer-ip-address: true
-
-
-  datasource:
-    url: jdbc:postgresql://localhost:5432/auth_db?options=-c%20TimeZone=Asia/Kolkata

@@ -12,22 +12,19 @@ services:
     image: postgres:15-alpine
     container_name: postgres-db
     environment:
+      POSTGRES_USER: sayantanB2B
       POSTGRES_PASSWORD: 12345
     ports:
       - "5432:5432"
+    volumes:
+      - ./init-db:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sayantanB2B"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     networks:
       - asset-network
-    # Initialize all isolated databases on boot
-    command: >
-      bash -c "
-      /usr/local/bin/docker-entrypoint.sh postgres &
-      sleep 5;
-      psql -U postgres -c 'CREATE DATABASE auth_db;' || true;
-      psql -U postgres -c 'CREATE DATABASE fleet_db;' || true;
-      psql -U postgres -c 'CREATE DATABASE booking_db;' || true;
-      psql -U postgres -c 'CREATE DATABASE workorder_db;' || true;
-      wait
-      "
 
   redis-cache:
     image: redis:7-alpine
@@ -41,7 +38,7 @@ services:
   # 2. SERVICE DISCOVERY & GATEWAY
   # ==========================================
   service-registry:
-    build: ./service-registry
+    build: ./service-registry/service-registry
     container_name: service-registry
     ports:
       - "8761:8761"
@@ -50,16 +47,22 @@ services:
       - SERVER_PORT=8761
       - EUREKA_CLIENT_REGISTER_WITH_EUREKA=false
       - EUREKA_CLIENT_FETCH_REGISTRY=false
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8761/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - asset-network
 
   api-gateway:
-    build: ./api-gateway
+    build: ./api-gateway/api-gateway
     container_name: api-gateway
     ports:
       - "8080:8080"
     depends_on:
-      - service-registry
+      service-registry:
+        condition: service_healthy
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://service-registry:8761/eureka/
     networks:
@@ -69,13 +72,15 @@ services:
   # 3. CORE DOMAIN MICROSERVICES
   # ==========================================
   auth-service:
-    build: ./auth-service
+    build: ./auth-service/auth-service
     container_name: auth-service
     depends_on:
-      - postgres-db
-      - service-registry
+      postgres-db:
+        condition: service_healthy
+      service-registry:
+        condition: service_healthy
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5433/auth_db
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/auth_db
       - SPRING_DATASOURCE_USERNAME=sayantanB2B
       - SPRING_DATASOURCE_PASSWORD=12345
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://service-registry:8761/eureka/
@@ -83,14 +88,17 @@ services:
       - asset-network
 
   fleet-service:
-    build: ./fleet-service
+    build: ./fleet-service/fleet-service
     container_name: fleet-service
     depends_on:
-      - postgres-db
-      - redis-cache
-      - service-registry
+      postgres-db:
+        condition: service_healthy
+      service-registry:
+        condition: service_healthy
+      redis-cache:
+        condition: service_started
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5433/fleet_db
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/fleet_db
       - SPRING_DATASOURCE_USERNAME=sayantanB2B
       - SPRING_DATASOURCE_PASSWORD=12345
       - SPRING_DATA_REDIS_HOST=redis-cache
@@ -100,14 +108,17 @@ services:
       - asset-network
 
   booking-service:
-    build: ./booking-service
+    build: ./booking-service/booking-service
     container_name: booking-service
     depends_on:
-      - postgres-db
-      - service-registry
-      - fleet-service
+      postgres-db:
+        condition: service_healthy
+      service-registry:
+        condition: service_healthy
+      fleet-service:
+        condition: service_started
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5433/booking_db
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/booking_db
       - SPRING_DATASOURCE_USERNAME=sayantanB2B
       - SPRING_DATASOURCE_PASSWORD=12345
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://service-registry:8761/eureka/
@@ -115,13 +126,15 @@ services:
       - asset-network
 
   maintenance-service:
-    build: ./maintenance-service
+    build: ./maintenance-service/maintenance-service
     container_name: maintenance-service
     depends_on:
-      - postgres-db
-      - service-registry
+      postgres-db:
+        condition: service_healthy
+      service-registry:
+        condition: service_healthy
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5433/workorder_db
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/workorder_db
       - SPRING_DATASOURCE_USERNAME=sayantanB2B
       - SPRING_DATASOURCE_PASSWORD=12345
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://service-registry:8761/eureka/

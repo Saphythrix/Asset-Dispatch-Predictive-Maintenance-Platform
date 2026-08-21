@@ -1,3 +1,62 @@
+#server:
+#  port: 8080
+#
+#spring:
+#  application:
+#    name: api-gateway
+#
+#  cloud:
+#    gateway:
+#      globalcors:
+#        cors-configurations:
+#          '[/**]':
+#            allowedOrigins:
+#              - "http://localhost:5173"
+#              - "http://127.0.0.1:5173"
+#              - "http://localhost:3000"
+#            allowedMethods:
+#              - GET
+#              - POST
+#              - PUT
+#              - PATCH
+#              - DELETE
+#              - OPTIONS
+#            allowedHeaders: "*"
+#            allowCredentials: true
+#
+#      discovery:
+#        locator:
+#          enabled: true
+#          lower-case-service-id: true
+#
+#      # Route configuration mapping incoming URI paths to downstream microservices
+#      routes:
+#        - id: auth-service
+#          uri: lb://AUTH-SERVICE
+#          predicates:
+#            - Path=/api/v1/auth/**
+#
+#        - id: fleet-service
+#          uri: lb://FLEET-SERVICE
+#          predicates:
+#            - Path=/api/v1/assets/**
+#
+#        - id: booking-service
+#          uri: lb://BOOKING-SERVICE
+#          predicates:
+#            - Path=/api/v1/bookings/**
+#
+#        - id: maintenance-service
+#          uri: lb://MAINTENANCE-SERVICE
+#          predicates:
+#            - Path=/api/v1/work-orders/**
+#
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
+#  instance:
+#    prefer-ip-address: true
 server:
   port: 8080
 
@@ -29,7 +88,6 @@ spring:
           enabled: true
           lower-case-service-id: true
 
-      # Route configuration mapping incoming URI paths to downstream microservices
       routes:
         - id: auth-service
           uri: lb://AUTH-SERVICE
@@ -54,6 +112,6 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://service-registry:8761/eureka/
   instance:
     prefer-ip-address: true
