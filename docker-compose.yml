@@ -11,6 +11,7 @@ services:
   postgres-db:
     image: postgres:15-alpine
     container_name: postgres-db
+    restart: unless-stopped
     environment:
       POSTGRES_USER: sayantanB2B
       POSTGRES_PASSWORD: 12345
@@ -29,6 +30,7 @@ services:
   redis-cache:
     image: redis:7-alpine
     container_name: redis-cache
+    restart: unless-stopped
     ports:
       - "6379:6379"
     networks:
@@ -40,6 +42,7 @@ services:
   service-registry:
     build: ./service-registry/service-registry
     container_name: service-registry
+    restart: unless-stopped
     ports:
       - "8761:8761"
     environment:
@@ -58,6 +61,7 @@ services:
   api-gateway:
     build: ./api-gateway/api-gateway
     container_name: api-gateway
+    restart: unless-stopped
     ports:
       - "8080:8080"
     depends_on:
@@ -74,6 +78,7 @@ services:
   auth-service:
     build: ./auth-service/auth-service
     container_name: auth-service
+    restart: unless-stopped
     depends_on:
       postgres-db:
         condition: service_healthy
@@ -90,6 +95,7 @@ services:
   fleet-service:
     build: ./fleet-service/fleet-service
     container_name: fleet-service
+    restart: unless-stopped
     depends_on:
       postgres-db:
         condition: service_healthy
@@ -110,6 +116,7 @@ services:
   booking-service:
     build: ./booking-service/booking-service
     container_name: booking-service
+    restart: unless-stopped
     depends_on:
       postgres-db:
         condition: service_healthy
@@ -128,6 +135,7 @@ services:
   maintenance-service:
     build: ./maintenance-service/maintenance-service
     container_name: maintenance-service
+    restart: unless-stopped
     depends_on:
       postgres-db:
         condition: service_healthy
