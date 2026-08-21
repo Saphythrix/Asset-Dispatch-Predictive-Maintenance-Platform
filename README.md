@@ -9,6 +9,9 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-336791.svg?logo=postgresql)](https://www.postgresql.org/)
 [![Redis](https://img.shields.io/badge/Redis-7.0-DC382D.svg?logo=redis)](https://redis.io/)
 [![Docker](https://img.shields.io/badge/Docker-Enabled-2496ED.svg?logo=docker)](https://www.docker.com/)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-000000.svg?logo=vercel&logoColor=white)](https://asset-dispatch-predictive-maintenan.vercel.app/)
+
+> 🚀 **Live Demo Deployed on Vercel**: [https://asset-dispatch-predictive-maintenan.vercel.app/](https://asset-dispatch-predictive-maintenan.vercel.app/)
 
 **ApexFleet** is an enterprise-grade, distributed B2B platform designed for the commercial leasing, real-time dispatching, and automated predictive maintenance of high-value industrial machinery, contractor assets, and precision instrumentation.
 
@@ -402,6 +405,7 @@ npm run dev
 ```
 
 The application will be live at: **`http://localhost:5173`**
+*(Alternatively, access the live deployed instance at: **[https://asset-dispatch-predictive-maintenan.vercel.app/](https://asset-dispatch-predictive-maintenan.vercel.app/)**)*
 
 ---
 
